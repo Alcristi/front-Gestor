@@ -3,25 +3,37 @@ import { useState } from "react";
 import { Theme } from "../../../components/themes";
 import { ViewTable } from "./components/ViewTable";
 
+export type TypeAllocation = {
+	cnpj:string;
+	razaoSocial:string;
+	dataConsulta:string;
+	valorUnitario: number;
+	numeroCotas:number;
+	valorMedio: number
+	retorno:number;
+	saldo:number;
+}
+
 export function ConsultAlocation() {
   const [cnpjValue, setCnpj] = useState("");
   const [valorValue, setvalor] = useState(0);
   const [viewValue,setView] = useState(false);
+  const [dataValue,setData] = useState({} as TypeAllocation)
   let response:any
   const enviar = async (e: any) => {
     e.preventDefault();
-      response = await axios.post("http://localhost:3000/consult", {
+      response = await axios.post((process.env.URL || "https://back-gestao.herokuapp.com/")+"/consult", {
       cnpj: cnpjValue,
       valor: valorValue,
     });
-	console.log(response.data);
+	setData(response.data)
 	setView(true);
   };
   if(viewValue)
   {
 	  return (
 		<Theme>
-			<ViewTable data={response.data} setView={setView}/>
+			<ViewTable data={dataValue} setView={setView}/>
 		</Theme>
 		)
   }
