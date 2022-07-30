@@ -17,7 +17,7 @@ export type TypeAllocation = {
 
 export function ConsultAlocation() {
   const [cnpjValue, setCnpj] = useState("");
-  const [valorValue, setvalor] = useState(0);
+  const [valorValue, setvalor] = useState("");
   const [viewValue,setView] = useState(false);
   const [dataValue,setData] = useState({} as TypeAllocation)
   let response:any
@@ -25,7 +25,7 @@ export function ConsultAlocation() {
     e.preventDefault();
       response = await axios.post((import.meta.env.URL || "https://back-gestao.herokuapp.com")+"/consult", {
       cnpj: cnpjValue,
-      valor: valorValue,
+      valor: parseFloat(valorValue),
     });
 	setData(response.data)
 	setView(true);
@@ -77,12 +77,11 @@ export function ConsultAlocation() {
                   required
                   value={valorValue}
                   onChange={(event) => {
-                    let valor = parseFloat(
-                      event.target.value == ""
-                        ? "0"
-                        : event.target.value.replace("0", "")
-                    );
-                    setvalor(valor);
+                    let regex = /^[\d.?!]+$/
+					if(regex.test(event.target.value))
+						setvalor(event.target.value)
+					else
+						setvalor(event.target.value.substring(0,event.target.value.length -1));
                   }}
                   type="number"
                   step=".001"

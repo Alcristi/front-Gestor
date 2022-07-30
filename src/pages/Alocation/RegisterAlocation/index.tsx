@@ -2,16 +2,14 @@ import { Theme } from "../../../components/themes";
 import axios from "axios";
 import {  useState} from "react";
 import { FormAnswered } from "./components/FormAnsewer";
-import process from "process";
-
 
 export function RegisterAlocation() {
   const [cnpjValue, setCnpj] = useState("");
   const [razaoSocialValue, setRazaoSocial] = useState("");
   const [operacaoValue, setOperacao] = useState("compra");
   const [dataOperacaoValue, setDataOperacao] = useState("");
-  const [cotasValue, setCotasValue] = useState(0);
-  const [valorValue, setvalor] = useState(0);
+  const [cotasValue, setCotasValue]= useState("");
+  const [valorValue, setvalor] = useState("");
   const [isAnswered,setIsAnswers] = useState(false)
 
   const enviar = async (e: any) => {
@@ -21,8 +19,8 @@ export function RegisterAlocation() {
       razaoSocial: razaoSocialValue,
       operacao: operacaoValue,
       dataOperacao: dataOperacaoValue,
-      cotas: cotasValue,
-      valor: valorValue,
+      cotas: parseInt(cotasValue),
+      valor: parseFloat(valorValue),
     });
     setIsAnswers(true);
   };
@@ -149,14 +147,14 @@ export function RegisterAlocation() {
                   required
                   value={cotasValue}
                   onChange={(event) => {
-                    let cotas = parseInt(
-                      event.target.value == ""
-                        ? "0"
-                        : event.target.value.replace("0", "")
-                    );
-                    setCotasValue(cotas);
+					let regex = /^[0-9]+$/
+					if(regex.test(event.target.value))
+						setCotasValue((event.target.value));
+					else
+						setCotasValue(event.target.value.substring(0,event.target.value.length -1));
+
                   }}
-                  type="number"
+                  type="string"
                   className="ml-6 border border-gray-400 rounded w-80 h-10 pl-3"
                   name="cotas"
                   id="cotas"
@@ -171,15 +169,13 @@ export function RegisterAlocation() {
                   required
                   value={valorValue}
                   onChange={(event) => {
-                    let valor = parseFloat(
-                      event.target.value == ""
-                        ? "0"
-                        : event.target.value.replace("0", "")
-                    );
-                    setvalor(valor);
+                    let regex = /^[\d.?!]+$/
+					if(regex.test(event.target.value))
+						setvalor(event.target.value)
+					else
+						setvalor(event.target.value.substring(0,event.target.value.length -1));
                   }}
-                  type="number"
-                  step=".001"
+                  type="string"
                   className="ml-6 border border-gray-400 rounded w-80 h-10 pl-3"
                   name="valor"
                   id="valor"
