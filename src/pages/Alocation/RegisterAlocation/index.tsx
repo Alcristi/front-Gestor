@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
 import { Theme } from "../../../components/themes";
 import axios from "axios";
-import { FormEventHandler, useRef, useState,useLayoutEffect } from "react";
+import {  useState} from "react";
 import { FormAnswered } from "./components/FormAnsewer";
+import process from "process";
+
 
 export function RegisterAlocation() {
   const [cnpjValue, setCnpj] = useState("");
@@ -15,7 +16,7 @@ export function RegisterAlocation() {
 
   const enviar = async (e: any) => {
     e.preventDefault();
-    let response = await axios.post((process.env.URL || "https://back-gestao.herokuapp.com/")+"/register", {
+    let response = await axios.post((import.meta.env.URL || "https://back-gestao.herokuapp.com")+"/register", {
       cnpj: cnpjValue,
       razaoSocial: razaoSocialValue,
       operacao: operacaoValue,

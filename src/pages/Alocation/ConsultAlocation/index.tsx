@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Theme } from "../../../components/themes";
 import { ViewTable } from "./components/ViewTable";
+import process from "process";
 
 export type TypeAllocation = {
 	cnpj:string;
@@ -22,7 +23,7 @@ export function ConsultAlocation() {
   let response:any
   const enviar = async (e: any) => {
     e.preventDefault();
-      response = await axios.post((process.env.URL)+"/consult", {
+      response = await axios.post((import.meta.env.URL || "https://back-gestao.herokuapp.com")+"/consult", {
       cnpj: cnpjValue,
       valor: valorValue,
     });
