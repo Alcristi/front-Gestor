@@ -22,7 +22,7 @@ export function ConsultAlocation() {
   let response:any
   const enviar = async (e: any) => {
     e.preventDefault();
-      response = await axios.post((process.env.URL || "https://back-gestao.herokuapp.com/")+"/consult", {
+      response = await axios.post((process.env.URL)+"/consult", {
       cnpj: cnpjValue,
       valor: valorValue,
     });
