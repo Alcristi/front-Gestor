@@ -2,49 +2,50 @@ import axios from "axios";
 import { useState } from "react";
 import { Theme } from "../../../components/themes";
 import process from "process";
-import { ViewTableList } from "../components/ViewTableList"
+import { ViewTableList } from "../components/ViewTableList";
 import { data } from "autoprefixer";
 import { time } from "console";
 
 export type TypeAllocation = {
-	_id:string,
-	cnpj:string,
-	razaoSocial:string,
-	operacao:string,
-	dataOperacao:string
-	cotas:number,
-	valor:number,
-}
+  _id: string;
+  cnpj: string;
+  razaoSocial: string;
+  operacao: string;
+  dataOperacao: string;
+  cotas: number;
+  valor: number;
+};
 
 export function ListAdmin() {
   const [cnpjValue, setCnpj] = useState("");
   const [valorValue, setvalor] = useState("");
-  const [viewValue,setView] = useState(false);
-  const [dataValue,setData] = useState([{}] as Array<TypeAllocation>)
-  const [countList,setCount] = useState(0);
-  const [dateInitial,setDateInitial] = useState("");
-  const [dateFinal,setDateFinal] = useState("");
+  const [viewValue, setView] = useState(false);
+  const [dataValue, setData] = useState([{}] as Array<TypeAllocation>);
+  const [countList, setCount] = useState(0);
+  const [dateInitial, setDateInitial] = useState("");
+  const [dateFinal, setDateFinal] = useState("");
 
-  let response:any
+  let response: any;
   const enviar = async (e: any) => {
     e.preventDefault();
-      response = await axios.post((import.meta.env.URL || "http://localhost:3000")+"/admin", {
-      initialDate: dateInitial,
-      finalDate: dateFinal,
-    });
-	console.log(response.data);
-	setData(response.data)
-	setView(true)
+    response = await axios.post(
+      (import.meta.env.URL || "http://localhost:3000") + "/admin",
+      {
+        initialDate: dateInitial,
+        finalDate: dateFinal,
+      }
+    );
+    console.log(response.data);
+    setData(response.data);
+    setView(true);
   };
 
-  if(viewValue)
-  {
-	  return (
-
-		<Theme>
-			<ViewTableList data={dataValue} setView={setView} setData={setData}/>
-		</Theme>
-		)
+  if (viewValue) {
+    return (
+      <Theme>
+        <ViewTableList data={dataValue} setView={setView} setData={setData} />
+      </Theme>
+    );
   }
 
   return (
@@ -52,7 +53,7 @@ export function ListAdmin() {
       <div className="w-96 h-[25em] bg-gray-100 border rounded border-gray-600 mt-10 ml-auto mr-auto">
         <div className="h-[25em]">
           <form onSubmit={enviar} className=" h-[25em]">
-		  <label
+            <label
               htmlFor="cadastro"
               className=" block w-fit h-fit ml-auto mr-auto mt-4 font-semibold text-lg"
             >
@@ -62,7 +63,7 @@ export function ListAdmin() {
               name="cadastro"
               className="flex flex-col h-[20em] justify-evenly border-t mt-2 border-gray-600"
             >
-               <label htmlFor="dataOperacao">
+              <label htmlFor="dataOperacao">
                 <span className="ml-6 text-base block font-semibold">
                   Data da Inicial
                 </span>
@@ -77,7 +78,7 @@ export function ListAdmin() {
                   name="dataOperacao"
                   id="dataOperacao"
                   placeholder="DD/MM/AAAA"
-				  autoComplete="off"
+                  autoComplete="off"
                 />
               </label>
               <label htmlFor="dataOperacao">
@@ -95,7 +96,7 @@ export function ListAdmin() {
                   name="dataOperacao"
                   id="dataOperacao"
                   placeholder="DD/MM/AAAA"
-				  autoComplete="off"
+                  autoComplete="off"
                 />
               </label>
               <button

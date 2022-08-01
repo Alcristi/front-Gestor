@@ -1,6 +1,6 @@
 import { Theme } from "../../../components/themes";
 import axios from "axios";
-import {  useState} from "react";
+import { useState } from "react";
 import { FormAnswered } from "./components/FormAnsewer";
 
 export function RegisterAlocation() {
@@ -8,24 +8,27 @@ export function RegisterAlocation() {
   const [razaoSocialValue, setRazaoSocial] = useState("");
   const [operacaoValue, setOperacao] = useState("compra");
   const [dataOperacaoValue, setDataOperacao] = useState("");
-  const [cotasValue, setCotasValue]= useState("");
+  const [cotasValue, setCotasValue] = useState("");
   const [valorValue, setvalor] = useState("");
-  const [isAnswered,setIsAnswers] = useState(false)
+  const [isAnswered, setIsAnswers] = useState(false);
 
   const enviar = async (e: any) => {
     e.preventDefault();
-    let response = await axios.post((import.meta.env.URL || "http://localhost:3000")+"/register", {
-      cnpj: cnpjValue,
-      razaoSocial: razaoSocialValue,
-      operacao: operacaoValue,
-      dataOperacao: dataOperacaoValue,
-      cotas: parseInt(cotasValue),
-      valor: parseFloat(valorValue),
-    });
-    console.log(response.data);
+    let response = await axios.post(
+      (import.meta.env.URL || "http://localhost:3000") + "/register",
+      {
+        cnpj: cnpjValue,
+        razaoSocial: razaoSocialValue,
+        operacao: operacaoValue,
+        dataOperacao: dataOperacaoValue,
+        cotas: parseInt(cotasValue),
+        valor: parseFloat(valorValue),
+      }
+    );
     setIsAnswers(true);
   };
-  if (isAnswered) return <FormAnswered isAnswer={isAnswered} setAnswer={setIsAnswers}/>;
+  if (isAnswered)
+    return <FormAnswered isAnswer={isAnswered} setAnswer={setIsAnswers} />;
   return (
     <Theme>
       <div className="w-96 h-[35em] bg-gray-100 border rounded border-gray-600 mt-10 ml-auto mr-auto">
@@ -138,7 +141,7 @@ export function RegisterAlocation() {
                   name="dataOperacao"
                   id="dataOperacao"
                   placeholder="DD/MM/AAAA"
-				  autoComplete="off"
+                  autoComplete="off"
                 />
               </label>
               <label htmlFor="cotas">
@@ -149,19 +152,23 @@ export function RegisterAlocation() {
                   required
                   value={cotasValue}
                   onChange={(event) => {
-					let regex = /^[0-9]+$/
-					if(regex.test(event.target.value))
-						setCotasValue((event.target.value));
-					else
-						setCotasValue(event.target.value.substring(0,event.target.value.length -1));
-
+                    let regex = /^[0-9]+$/;
+                    if (regex.test(event.target.value))
+                      setCotasValue(event.target.value);
+                    else
+                      setCotasValue(
+                        event.target.value.substring(
+                          0,
+                          event.target.value.length - 1
+                        )
+                      );
                   }}
                   type="string"
                   className="ml-6 border border-gray-400 rounded w-80 h-10 pl-3"
                   name="cotas"
                   id="cotas"
                   placeholder="00"
-				  autoComplete="off"
+                  autoComplete="off"
                 />
               </label>
               <label htmlFor="valor">
@@ -172,18 +179,23 @@ export function RegisterAlocation() {
                   required
                   value={valorValue}
                   onChange={(event) => {
-                    let regex = /^[\d.?!]+$/
-					if(regex.test(event.target.value))
-						setvalor(event.target.value)
-					else
-						setvalor(event.target.value.substring(0,event.target.value.length -1));
+                    let regex = /^[\d.?!]+$/;
+                    if (regex.test(event.target.value))
+                      setvalor(event.target.value);
+                    else
+                      setvalor(
+                        event.target.value.substring(
+                          0,
+                          event.target.value.length - 1
+                        )
+                      );
                   }}
                   type="string"
                   className="ml-6 border border-gray-400 rounded w-80 h-10 pl-3"
                   name="valor"
                   id="valor"
                   placeholder="0.00"
-				  autoComplete="off"
+                  autoComplete="off"
                 />
               </label>
               <button

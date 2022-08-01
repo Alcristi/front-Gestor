@@ -5,39 +5,39 @@ import { ViewTable } from "./components/ViewTable";
 import process from "process";
 
 export type TypeAllocation = {
-	cnpj:string;
-	razaoSocial:string;
-	dataConsulta:string;
-	valorUnitario: number;
-	numeroCotas:number;
-	valorMedio: number
-	retorno:number;
-	saldo:number;
-}
+  cnpj: string;
+  razaoSocial: string;
+  dataConsulta: string;
+  valorUnitario: number;
+  numeroCotas: number;
+  valorMedio: number;
+  retorno: number;
+  saldo: number;
+};
 
 export function ConsultAlocation() {
   const [cnpjValue, setCnpj] = useState("");
   const [valorValue, setvalor] = useState("");
-  const [viewValue,setView] = useState(false);
-  const [dataValue,setData] = useState({} as TypeAllocation)
-  let response:any
+  const [viewValue, setView] = useState(false);
+  const [dataValue, setData] = useState({} as TypeAllocation);
   const enviar = async (e: any) => {
     e.preventDefault();
-      response = await axios.post((import.meta.env.URL || "http://localhost:3000")+"/consult", {
-      cnpj: cnpjValue,
-      valor: parseFloat(valorValue),
-    });
-	console.log(response.data);
-	setData(response.data)
-	setView(true);
+    let response = await axios.post(
+      (import.meta.env.URL || "http://localhost:3000") + "/consult",
+      {
+        cnpj: cnpjValue,
+        valor: parseFloat(valorValue),
+      }
+    );
+    setData(response.data);
+    setView(true);
   };
-  if(viewValue)
-  {
-	  return (
-		<Theme>
-			<ViewTable data={dataValue} setView={setView}/>
-		</Theme>
-		)
+  if (viewValue) {
+    return (
+      <Theme>
+        <ViewTable data={dataValue} setView={setView} />
+      </Theme>
+    );
   }
 
   return (
@@ -68,7 +68,7 @@ export function ConsultAlocation() {
                   name="cnpj"
                   id="cnpj"
                   placeholder="XX. XXX. XXX/0001-XX"
-				  autoComplete="off"
+                  autoComplete="off"
                 />
               </label>
               <label htmlFor="valor">
@@ -79,11 +79,16 @@ export function ConsultAlocation() {
                   required
                   value={valorValue}
                   onChange={(event) => {
-                    let regex = /^[\d.?!]+$/
-					if(regex.test(event.target.value))
-						setvalor(event.target.value)
-					else
-						setvalor(event.target.value.substring(0,event.target.value.length -1));
+                    let regex = /^[\d.?!]+$/;
+                    if (regex.test(event.target.value))
+                      setvalor(event.target.value);
+                    else
+                      setvalor(
+                        event.target.value.substring(
+                          0,
+                          event.target.value.length - 1
+                        )
+                      );
                   }}
                   type="number"
                   step=".001"

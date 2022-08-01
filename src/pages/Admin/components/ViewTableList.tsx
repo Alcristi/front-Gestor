@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { ReactElement, ReactHTMLElement, useState } from "react";
 import { Link } from "react-router-dom";
 import { EditAdmin } from "../EditAdmin";
-
+import { HiOutlinePencil, HiOutlineTrash } from "react-icons/hi";
 export type TypeAllocation = {
   _id: string;
   cnpj: string;
@@ -19,21 +19,33 @@ export const ViewTableList = ({
 }: {
   data: TypeAllocation[];
   setView: Function;
-  setData:Function;
+  setData: Function;
 }) => {
-	const[valueEdit,setEdit] = useState(false)
-	const [dataEdit,setDataEdit] = useState({} as TypeAllocation)
-  let arrayAux:TypeAllocation[] = []
-  async function deleteAlocation(id_D:string){
-  let payload:AxiosRequestConfig<any> ={data:{id:id_D}} 
-  let response = await axios.delete((import.meta.env.URL || "http://localhost:3000")+"/admin" ,payload);
-  data.forEach((element,index) => {
-    if(element._id !== id_D)
-      arrayAux.push(element)
-  });
-  setData(arrayAux);
-  };
+  const [valueEdit, setEdit] = useState(false);
+  const [dataEdit, setDataEdit] = useState({} as TypeAllocation);
+  let arrayAux: TypeAllocation[] = [];
 
+  async function deleteAlocation(id_D: string) {
+    let payload: AxiosRequestConfig<any> = { data: { id: id_D } };
+    let response = await axios.delete(
+      (import.meta.env.URL || "http://localhost:3000") + "/admin",
+      payload
+    );
+    data.forEach((element, index) => {
+      if (element._id !== id_D) arrayAux.push(element);
+    });
+    setData(arrayAux);
+  }
+  if (valueEdit) {
+    return (
+      <EditAdmin
+        data={dataEdit}
+        setView={setView}
+        setDataEdit={setDataEdit}
+        setEdit={setEdit}
+      />
+    );
+  }
   return (
     <div>
       <div className="h-fit flex flex-col justify-around mt-20">
@@ -80,36 +92,47 @@ export const ViewTableList = ({
               </tr>
             </thead>
             {data.map((element) => (
-              <tbody key={element._id} className="border border-gray-800 rounded-b-md">
+              <tbody key={element._id} className="">
                 <tr>
                   <td
-                    className=" w-60 h-fit border-r border-gray-800 text-center whitespace-nowrap"
+                    className=" border w-60 h-fit border-r border-gray-800 text-center whitespace-nowrap"
                     scope="row"
                   >
                     {element.cnpj}
                   </td>
-                  <td className=" w-60 h-fit border-r border-gray-800 text-center ">
+                  <td className=" border w-60 h-fit border-r border-gray-800 text-center ">
                     {element.razaoSocial}
                   </td>
-                  <td className=" w-60 h-fit border-r border-gray-800 text-center ">
+                  <td className=" border w-60 h-fit border-r border-gray-800 text-center ">
                     {element.operacao}
                   </td>
-                  <td className=" w-60 h-fit border-r border-gray-800 text-center ">
+                  <td className=" border w-60 h-fit border-r border-gray-800 text-center ">
                     {element.dataOperacao}
                   </td>
-                  <td className=" w-60 h-fit border-r border-gray-800 text-center ">
+                  <td className=" border w-60 h-fit border-r border-gray-800 text-center ">
                     {element.cotas}
                   </td>
-                  <td className=" w-60 h-fit border-r border-gray-800 text-center ">
+                  <td className=" border w-60 h-fit border-r border-gray-800 text-center ">
                     {"R$" + element.valor.toFixed(2)}
                   </td>
-                  <td className=" w-60 h-fit border-r border-gray-800 text-center ">
-                    {" "}
-                    <button onClick={() => { setDataEdit(element);setEdit(true) }}>
-                      {" "}
-                      Edit{" "}
-                    </button>{" "}
-                    <button onClick={(e) => { deleteAlocation(element._id)}}>Delete</button>{" "}
+                  <td className="  w-60 h-fit border-gray-800">
+                    <button
+                      onClick={() => {
+                        setDataEdit(element);
+                        setEdit(true);
+                      }}
+                      className="ml-2 text-2xl pt-[0.5em]"
+                    >
+                      <HiOutlinePencil />
+                    </button>
+                    <button
+                      className="ml-2 text-2xl  pt-[0.5em]"
+                      onClick={(e) => {
+                        deleteAlocation(element._id);
+                      }}
+                    >
+                      <HiOutlineTrash />
+                    </button>
                   </td>
                 </tr>
               </tbody>
