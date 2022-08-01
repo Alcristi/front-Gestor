@@ -22,6 +22,7 @@ export function RegisterAlocation() {
       cotas: parseInt(cotasValue),
       valor: parseFloat(valorValue),
     });
+    console.log(response.data);
     setIsAnswers(true);
   };
   if (isAnswered) return <FormAnswered isAnswer={isAnswered} setAnswer={setIsAnswers}/>;

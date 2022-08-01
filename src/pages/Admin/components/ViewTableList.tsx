@@ -1,3 +1,4 @@
+import axios, { AxiosRequestConfig } from "axios";
 import { ReactElement, ReactHTMLElement, useState } from "react";
 import { Link } from "react-router-dom";
 import { EditAdmin } from "../EditAdmin";
@@ -14,16 +15,25 @@ export type TypeAllocation = {
 export const ViewTableList = ({
   data,
   setView,
+  setData,
 }: {
   data: TypeAllocation[];
   setView: Function;
+  setData:Function;
 }) => {
 	const[valueEdit,setEdit] = useState(false)
 	const [dataEdit,setDataEdit] = useState({} as TypeAllocation)
+  let arrayAux:TypeAllocation[] = []
+  async function deleteAlocation(id_D:string){
+  let payload:AxiosRequestConfig<any> ={data:{id:id_D}} 
+  let response = await axios.delete((import.meta.env.URL || "http://localhost:3000")+"/admin" ,payload);
+  data.forEach((element,index) => {
+    if(element._id !== id_D)
+      arrayAux.push(element)
+  });
+  setData(arrayAux);
+  };
 
-
-	if(valueEdit)
-	return(<EditAdmin data={dataEdit} setView={setView} setDataEdit={setDataEdit}/>)
   return (
     <div>
       <div className="h-fit flex flex-col justify-around mt-20">
@@ -99,7 +109,7 @@ export const ViewTableList = ({
                       {" "}
                       Edit{" "}
                     </button>{" "}
-                    <button>Delete</button>{" "}
+                    <button onClick={(e) => { deleteAlocation(element._id)}}>Delete</button>{" "}
                   </td>
                 </tr>
               </tbody>
@@ -118,7 +128,7 @@ export const ViewTableList = ({
             Home
           </span>
         </Link>
-        <Link to="/consult">
+        <Link to="/admin">
           <span
             className="p-2 pl-14 pr-14 w-fit ml-auto mr-auto rounded block font-semibold border-2 border-gray-500 hover:bg-gray-700 hover:text-gray-200 hover:border-gray-700"
             onClick={() => {

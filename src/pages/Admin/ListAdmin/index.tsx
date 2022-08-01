@@ -34,8 +34,7 @@ export function ListAdmin() {
     });
 	console.log(response.data);
 	setData(response.data)
-	setTimeout(()=>{setView(true)},1000)
-
+	setView(true)
   };
 
   if(viewValue)
@@ -43,7 +42,7 @@ export function ListAdmin() {
 	  return (
 
 		<Theme>
-			<ViewTableList data={dataValue} setView={setView}/>
+			<ViewTableList data={dataValue} setView={setView} setData={setData}/>
 		</Theme>
 		)
   }
@@ -103,7 +102,7 @@ export function ListAdmin() {
                 type="submit"
                 className="p-2 pl-14 pr-14 w-fit ml-auto mr-auto rounded font-semibold border-2 border-gray-500 hover:bg-gray-700 hover:text-gray-200 hover:border-gray-700"
               >
-                Enviar
+                Buscar
               </button>
             </fieldset>
           </form>
