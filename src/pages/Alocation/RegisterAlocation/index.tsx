@@ -15,7 +15,7 @@ export function RegisterAlocation() {
   const enviar = async (e: any) => {
     e.preventDefault();
     let response = await axios.post(
-      (import.meta.env.URL || "https://back-gestao.herokuapp.com/") + "/register",
+      (import.meta.env.URL || "https://back-gestao.herokuapp.com") + "/register",
       {
         cnpj: cnpjValue,
         razaoSocial: razaoSocialValue,

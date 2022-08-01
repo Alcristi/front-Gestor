@@ -28,7 +28,7 @@ export const ViewTableList = ({
   async function deleteAlocation(id_D: string) {
     let payload: AxiosRequestConfig<any> = { data: { id: id_D } };
     let response = await axios.delete(
-      (import.meta.env.URL || "https://back-gestao.herokuapp.com/") + "/admin",
+      (import.meta.env.URL || "https://back-gestao.herokuapp.com") + "/admin",
       payload
     );
     data.forEach((element, index) => {

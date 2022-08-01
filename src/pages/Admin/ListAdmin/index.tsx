@@ -29,7 +29,7 @@ export function ListAdmin() {
   const enviar = async (e: any) => {
     e.preventDefault();
     response = await axios.post(
-      (import.meta.env.URL || "https://back-gestao.herokuapp.com/") + "/admin",
+      (import.meta.env.URL || "https://back-gestao.herokuapp.com") + "/admin",
       {
         initialDate: dateInitial,
         finalDate: dateFinal,
