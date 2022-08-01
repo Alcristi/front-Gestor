@@ -2,31 +2,36 @@ import { Theme } from "../../../components/themes";
 import axios from "axios";
 import {  useState} from "react";
 import { FormAnswered } from "./components/FormAnsewer";
+import { TypeAllocation } from "../components/ViewTableList";
 
-export function RegisterAlocation() {
-  const [cnpjValue, setCnpj] = useState("");
-  const [razaoSocialValue, setRazaoSocial] = useState("");
-  const [operacaoValue, setOperacao] = useState("compra");
-  const [dataOperacaoValue, setDataOperacao] = useState("");
-  const [cotasValue, setCotasValue]= useState("");
-  const [valorValue, setvalor] = useState("");
+
+export function EditAdmin({data,setView,setDataEdit}:{data:TypeAllocation,setView:Function,setDataEdit:Function}) {
+  const [cnpjValue, setCnpj] = useState(data.cnpj);
+  const [razaoSocialValue, setRazaoSocial] = useState(data.razaoSocial);
+  const [operacaoValue, setOperacao] = useState(data.operacao);
+  const [dateOperacaoValue, setDateOperacao] = useState(data.dataOperacao);
+  const [cotasValue, setCotasValue]= useState(data.cotas.toString());
+  const [valorValue, setvalor] = useState(data.valor.toString());
   const [isAnswered,setIsAnswers] = useState(false)
-
+  const [idValue,setId] = useState(data._id)
+  console.log(data._id);
   const enviar = async (e: any) => {
     e.preventDefault();
-    let response = await axios.post((import.meta.env.URL || "http://localhost:3000")+"/register", {
+    let response = await axios.put((import.meta.env.URL || "http://localhost:3000")+"/admin", {
+	  id:idValue,
       cnpj: cnpjValue,
       razaoSocial: razaoSocialValue,
       operacao: operacaoValue,
-      dataOperacao: dataOperacaoValue,
+      dateOperacao: dateOperacaoValue,
       cotas: parseInt(cotasValue),
       valor: parseFloat(valorValue),
     });
+	console.log(response);
+	setView(false);
     setIsAnswers(true);
   };
   if (isAnswered) return <FormAnswered isAnswer={isAnswered} setAnswer={setIsAnswers}/>;
   return (
-    <Theme>
       <div className="w-96 h-[35em] bg-gray-100 border rounded border-gray-600 mt-10 ml-auto mr-auto">
         <div className="h-[35em]">
           <form onSubmit={enviar} className=" h-[35em]">
@@ -34,7 +39,7 @@ export function RegisterAlocation() {
               htmlFor="cadastro"
               className=" block w-fit h-fit ml-auto mr-auto mt-4 font-semibold text-lg"
             >
-              Cadastre sua Alocação
+              Edite essa Alocação
             </label>
             <fieldset
               name="cadastro"
@@ -122,20 +127,20 @@ export function RegisterAlocation() {
                 </div>
               </div>
 
-              <label htmlFor="dataOperacao">
+              <label htmlFor="dateOperacao">
                 <span className="ml-6 text-base block font-semibold">
                   Data da Operação
                 </span>
                 <input
                   required
-                  value={dataOperacaoValue}
+                  value={dateOperacaoValue}
                   onChange={(event) => {
-                    setDataOperacao(event.target.value);
+                    setDateOperacao(event.target.value);
                   }}
                   type="data"
                   className="ml-6 border border-gray-400 rounded w-80 h-10 pl-3"
-                  name="dataOperacao"
-                  id="dataOperacao"
+                  name="dateOperacao"
+                  id="dateOperacao"
                   placeholder="DD/MM/AAAA"
 				  autoComplete="off"
                 />
@@ -188,13 +193,13 @@ export function RegisterAlocation() {
               <button
                 type="submit"
                 className="p-2 pl-14 pr-14 w-fit ml-auto mr-auto rounded font-semibold border-2 border-gray-500 hover:bg-gray-700 hover:text-gray-200 hover:border-gray-700"
-              >
+
+			  >
                 Enviar
               </button>
             </fieldset>
           </form>
         </div>
       </div>
-    </Theme>
   );
 }

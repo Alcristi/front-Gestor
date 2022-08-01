@@ -1,41 +1,49 @@
 import axios from "axios";
 import { useState } from "react";
 import { Theme } from "../../../components/themes";
-import { ViewTable } from "./components/ViewTable";
 import process from "process";
+import { ViewTableList } from "../components/ViewTableList"
+import { data } from "autoprefixer";
+import { time } from "console";
 
 export type TypeAllocation = {
-	cnpj:string;
-	razaoSocial:string;
-	dataConsulta:string;
-	valorUnitario: number;
-	numeroCotas:number;
-	valorMedio: number
-	retorno:number;
-	saldo:number;
+	_id:string,
+	cnpj:string,
+	razaoSocial:string,
+	operacao:string,
+	dataOperacao:string
+	cotas:number,
+	valor:number,
 }
 
-export function ConsultAlocation() {
+export function ListAdmin() {
   const [cnpjValue, setCnpj] = useState("");
   const [valorValue, setvalor] = useState("");
   const [viewValue,setView] = useState(false);
-  const [dataValue,setData] = useState({} as TypeAllocation)
+  const [dataValue,setData] = useState([{}] as Array<TypeAllocation>)
+  const [countList,setCount] = useState(0);
+  const [dateInitial,setDateInitial] = useState("");
+  const [dateFinal,setDateFinal] = useState("");
+
   let response:any
   const enviar = async (e: any) => {
     e.preventDefault();
-      response = await axios.post((import.meta.env.URL || "http://localhost:3000")+"/consult", {
-      cnpj: cnpjValue,
-      valor: parseFloat(valorValue),
+      response = await axios.post((import.meta.env.URL || "http://localhost:3000")+"/admin", {
+      initialDate: dateInitial,
+      finalDate: dateFinal,
     });
 	console.log(response.data);
 	setData(response.data)
-	setView(true);
+	setTimeout(()=>{setView(true)},1000)
+
   };
+
   if(viewValue)
   {
 	  return (
+
 		<Theme>
-			<ViewTable data={dataValue} setView={setView}/>
+			<ViewTableList data={dataValue} setView={setView}/>
 		</Theme>
 		)
   }
@@ -45,52 +53,50 @@ export function ConsultAlocation() {
       <div className="w-96 h-[25em] bg-gray-100 border rounded border-gray-600 mt-10 ml-auto mr-auto">
         <div className="h-[25em]">
           <form onSubmit={enviar} className=" h-[25em]">
-            <label
+		  <label
               htmlFor="cadastro"
               className=" block w-fit h-fit ml-auto mr-auto mt-4 font-semibold text-lg"
             >
-              Cadastre sua Alocação
+              Pesquise por Operações
             </label>
             <fieldset
               name="cadastro"
               className="flex flex-col h-[20em] justify-evenly border-t mt-2 border-gray-600"
             >
-              <label htmlFor="cnpj" className="">
-                <span className="ml-6 text-base block font-semibold">Cnpj</span>
-                <input
-                  required
-                  value={cnpjValue}
-                  onChange={(event) => {
-                    setCnpj(event.target.value);
-                  }}
-                  type="text"
-                  className="ml-6 border border-gray-400 rounded w-80 h-10 pl-3"
-                  name="cnpj"
-                  id="cnpj"
-                  placeholder="XX. XXX. XXX/0001-XX"
-				  autoComplete="off"
-                />
-              </label>
-              <label htmlFor="valor">
+               <label htmlFor="dataOperacao">
                 <span className="ml-6 text-base block font-semibold">
-                  Valor Atual da Cota
+                  Data da Inicial
                 </span>
                 <input
                   required
-                  value={valorValue}
+                  value={dateInitial}
                   onChange={(event) => {
-                    let regex = /^[\d.?!]+$/
-					if(regex.test(event.target.value))
-						setvalor(event.target.value)
-					else
-						setvalor(event.target.value.substring(0,event.target.value.length -1));
+                    setDateInitial(event.target.value);
                   }}
-                  type="number"
-                  step=".001"
+                  type="data"
                   className="ml-6 border border-gray-400 rounded w-80 h-10 pl-3"
-                  name="valor"
-                  id="valor"
-                  placeholder="0.00"
+                  name="dataOperacao"
+                  id="dataOperacao"
+                  placeholder="DD/MM/AAAA"
+				  autoComplete="off"
+                />
+              </label>
+              <label htmlFor="dataOperacao">
+                <span className="ml-6 text-base block font-semibold">
+                  Data Final
+                </span>
+                <input
+                  required
+                  value={dateFinal}
+                  onChange={(event) => {
+                    setDateFinal(event.target.value);
+                  }}
+                  type="data"
+                  className="ml-6 border border-gray-400 rounded w-80 h-10 pl-3"
+                  name="dataOperacao"
+                  id="dataOperacao"
+                  placeholder="DD/MM/AAAA"
+				  autoComplete="off"
                 />
               </label>
               <button
