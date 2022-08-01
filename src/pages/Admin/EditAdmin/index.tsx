@@ -28,7 +28,7 @@ export function EditAdmin({
   const enviar = async (e: any) => {
     e.preventDefault();
     let response = await axios.put(
-      (import.meta.env.URL || "http://localhost:3000") + "/admin",
+      (import.meta.env.URL || "https://back-gestao.herokuapp.com/") + "/admin",
       {
         id: idValue,
         cnpj: cnpjValue,
