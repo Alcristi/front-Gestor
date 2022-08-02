@@ -27,7 +27,7 @@ Gosto muito de trabalhar com Ts, pois a primeira linguagem que aprendi e tenho u
 Essa foi a primeira vez que construir um front do zero utilizando React, tive contatos com estruturas prontas, em que tinha que dar manutenção em alguns componentes.E consegui aprender muito com isso, ter que buscar a melhor estrutura e entender o porque de escolher ela.
 Além disso, como citado acima, aprendi bastante com toda dificuldade que tive para encontrar os tipos corretos de cada estrutura que eu utilizava
 ### Vite
-
+Ele visa resolver esses problemas aproveitando novos avanços no ecossistema: a disponibilidade de módulos ES nativos no navegador e o surgimento de ferramentas JavaScript escritas em linguagens de compilação para nativas, me auxiliando bastante na utilização do tailwind.
 ### Axios
 Utilizei o axios para fazer todas as requisições para o back, um ferramenta muito útil e que facilita muito no processo de desenvolvimento.
 ### Tailwind
