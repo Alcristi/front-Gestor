@@ -37,6 +37,6 @@
 ## Como foi fazer esse Projeto
 	Gostei muito dessa experiência pois foi a primeira fez que pensei num front end completo, consegui passar por todas a dificuldades que foram aparecendo. Logo consegui evoluir e acredito que diante do que era solicitado foi um bom trabalho
 ### Como rodar
-	- Para rodar localmente você precisar baixar esse repositório e o do <https://github.com/Alcristi/Gest-o-Financeira>, para iniciaro front só e necessário clona esse repo, dar yarn. Trocar todas as requisições do axie pela url do back que esa instaciado na sua máquina, e rodar Yarn dev no terminal
+	Para rodar localmente você precisar baixar esse repositório e o do <https://github.com/Alcristi/Gest-o-Financeira>, para iniciaro front só e necessário clona esse repo, dar yarn. Trocar todas as requisições do axie pela url do back que esa instaciado na sua máquina, e rodar Yarn dev no terminal
 
 
