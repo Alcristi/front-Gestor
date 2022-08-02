@@ -24,7 +24,7 @@ export function EditAdmin({
   const [valorValue, setvalor] = useState(data.valor.toString());
   const [isAnswered, setIsAnswers] = useState(false);
   const [idValue, setId] = useState(data._id);
-  console.log(data._id);
+  
   const enviar = async (e: any) => {
     e.preventDefault();
     let response = await axios.put(
@@ -39,11 +39,17 @@ export function EditAdmin({
         valor: parseFloat(valorValue),
       }
     );
-    console.log(response);
-    setEdit(false);
+    setIsAnswers(true);
   };
   if (isAnswered)
-    return <FormAnswered isAnswer={isAnswered} setAnswer={setIsAnswers} />;
+    return (
+      <FormAnswered
+        isAnswer={isAnswered}
+        setAnswer={setIsAnswers}
+        setEdit={setEdit}
+        setView={setView}
+      />
+    );
   return (
     <div className="w-96 h-[35em] bg-gray-100 border rounded border-gray-600 mt-10 ml-auto mr-auto">
       <div className="h-[35em]">

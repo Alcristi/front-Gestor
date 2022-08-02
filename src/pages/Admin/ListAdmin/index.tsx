@@ -35,8 +35,9 @@ export function ListAdmin() {
         finalDate: dateFinal,
       }
     );
-    console.log(response.data);
     setData(response.data);
+    setDateFinal("");
+    setDateInitial("");
     setView(true);
   };
 
